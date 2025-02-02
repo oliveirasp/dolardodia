@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotação do Dólar</title>
+</head>
+<body>
+    <h1>Cotação do Dólar (USD) em relação ao Real (BRL)</h1>
+    <p id="cotacao">Carregando...</p>
+
+    <script>
+        // Função para buscar a cotação
+        async function buscarCotacao() {
+            const apiKey = 'd6107e9f'; // Substitua pela sua chave da API
+            const url = `https://api.hgbrasil.com/finance?key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                // Extrai a cotação do dólar
+                const cotacaoDolar = data.results.currencies.USD.buy;
+                document.getElementById('cotacao').innerText = `1 USD = ${cotacaoDolar.toFixed(2)} BRL`;
+            } catch (error) {
+                console.error('Erro ao buscar a cotação:', error);
+                document.getElementById('cotacao').innerText = 'Erro ao carregar a cotação.';
+            }
+        }
+
+        // Chama a função ao carregar a página
+        buscarCotacao();
+    </script>
+</body>
+</html>
